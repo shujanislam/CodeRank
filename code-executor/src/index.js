@@ -4,6 +4,8 @@ const app = express();
 
 const { Kafka } = require('kafkajs');
 
+const { problemAndCode } = require('./utils/problemAndCode');
+
 const kafka = new Kafka({
   clientId: 'api-server',
   brokers: ['localhost:9092'],
@@ -11,7 +13,7 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({ groupId: 'executor-group' });
 
-const executeCode = async() =>{
+const fetchCode = async() =>{
   await consumer.connect();
 
   await consumer.subscribe({ topic: 'code-submissions', fromBeginning: false });
@@ -20,14 +22,15 @@ const executeCode = async() =>{
     eachMessage: async ({ topic, partition, message }) => {
       const submission = JSON.parse(message.value.toString());
 
-      console.log('💻 Received submission:', submission);
+      console.log('Received submission:', submission);
+      
+      problemAndCode(submission.language, submission.problem, submission.code);
 
-      // TODO: Execute code and handle result here
     },
   })
 }
 
-executeCode();
+fetchCode();
 
 const PORT = process.env.PORT || 8081;
 
