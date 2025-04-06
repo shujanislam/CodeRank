@@ -1,0 +1,5 @@
+
+FROM node:22-alpine
+WORKDIR /app
+COPY /home/shujan/Programming/CodeRank/code-executor/src/utils/temp/temp.js /app/temp.js
+CMD ["node", "temp.js"]
