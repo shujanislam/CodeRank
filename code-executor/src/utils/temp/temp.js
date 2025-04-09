@@ -4,4 +4,3 @@ function execute(a, b) {
 }
 const result = execute(1,2);
 console.log('OUTPUT:', result);
-console.log('Hello from Docker!');

@@ -21,9 +21,7 @@ const fetchCode = async() =>{
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       const submission = JSON.parse(message.value.toString());
-
-      console.log('Received submission:', submission);
-      
+     
       problemAndCode(submission.language, submission.problem, submission.code);
 
     },
