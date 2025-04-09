@@ -19,12 +19,17 @@ const boilerplateJS = (prob, code, params) => {
 
   // JS code to run
   const wholeCode = `
-function execute(a, b) {
-  ${code}
-}
-const result = execute(${params});
-console.log('OUTPUT:', result);
-`;
+    function execute(a, b) {
+      ${code}
+    }
+    const result = execute(${params[0]}, ${params[1]});
+    const expected = ${params[2]};
+    if (result === expected) {
+      console.log('✅ Passed');
+    } else {
+      console.log('❌ Failed: got', result, 'but expected', expected);
+    }
+  `;
 
   fs.writeFileSync(filePath, wholeCode);
   fs.copyFileSync(filePath, dockerTempJsPath);

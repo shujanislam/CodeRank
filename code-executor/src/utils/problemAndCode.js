@@ -4,7 +4,7 @@ const { boilerplateJS } = require('./boilerplateJS');
 const languages = ['js', 'py', 'go'];
 
 const problems = {
-  'add': ['1', '2'],         // example: add(a, b)
+  'add': ['1', '2', '3'],         // example: add(a, b)
   'subtract': ['3', '1'],    // example: subtract(a, b)
 };
 
@@ -25,6 +25,7 @@ const problemAndCode = (language, problem, code) => {
       // Get the parameters for the problem
       const params = problems[prob]; // e.g., ['a', 'b']
       boilerplateJS(prob, code, params);
+      console.log('working till here')
     }
 
     // You can later add Python and Go versions here
