@@ -21,9 +21,7 @@ const boilerplateJS = (prob, code, params) => {
 
   // JS code to run
   const wholeCode = `
-    function execute(a, b) {
-      ${code}
-    }
+    ${code}
     const result = execute(${params[0]}, ${params[1]});
     const expected = ${params[2]};
     if (result === expected) {
