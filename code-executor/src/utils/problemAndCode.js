@@ -1,14 +1,9 @@
-
 const { boilerplateJS } = require('./boilerplateJS');
+const { fetchProbAndTestCases } = require('../controllers/problemController.js');
 
 const languages = ['js', 'py', 'go'];
 
-const problems = {
-  'add': ['1', '2', '3'],         // example: add(a, b)
-  'subtract': ['3', '1'],    // example: subtract(a, b)
-};
-
-const problemAndCode = (language, problem, code) => {
+const problemAndCode = async (language, problem, code) => {
   let lang = null;
   let prob = null;
 
@@ -16,22 +11,27 @@ const problemAndCode = (language, problem, code) => {
     lang = language;
   }
 
-  if (problems.hasOwnProperty(problem)) {
-    prob = problem;
-  }
-
-  if (lang && prob) {
-    if (lang === 'js') {
-      // Get the parameters for the problem
-      const params = problems[prob]; // e.g., ['a', 'b']
-      boilerplateJS(prob, code, params);
-      console.log('working till here')
+  try {
+    const probData = await fetchProbAndTestCases(problem);
+    if (!probData) {
+      console.log('❌ Problem not found in database');
+      return;
     }
 
-    // You can later add Python and Go versions here
-    // if (lang === 'py') { ... }
-  } else {
-    console.log("Invalid language or problem name");
+    const testCases = probData.test_cases;
+
+    if (lang && testCases) {
+      if (lang === 'js') {
+        testCases.forEach((test) => {
+          const params = [...test.input, test.output];
+          boilerplateJS(problem, code, params);
+        });
+      }
+    } else {
+      console.log("Invalid language or problem name");
+    }
+  } catch (err) {
+    console.log("Error fetching problem or running code:", err);
   }
 };
 
