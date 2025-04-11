@@ -9,11 +9,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-  origin: 'http://localhost:3000', // Replace with your frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-}));
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -24,5 +20,5 @@ app.use('/', api);
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, ()=>{
-  console.log('Running on port : 8080')
+  console.log(`Running on port : ${PORT}`)
 })
