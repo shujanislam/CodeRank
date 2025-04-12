@@ -1,9 +1,9 @@
 
     function execute(a, b) {
-  return b / a;
+  return a * b;
 }
-    const result = execute(10, 2);
-    const expected = 5;
+    const result = execute(-1, 5);
+    const expected = -5;
     if (result === expected) {
       console.log('✅ Passed');
     } else {

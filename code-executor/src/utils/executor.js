@@ -1,4 +1,5 @@
 const { spawn } = require('child_process');
+const { outputController } = require('../controllers/outputController');
 
 const executor = (code, dockerJsDir) => {
   // Step 1: Docker Build
@@ -23,6 +24,7 @@ const executor = (code, dockerJsDir) => {
 
     run.stdout.on('data', (data) => {
       process.stdout.write(`${data}`);
+      outputController(data)
     });
 
     run.stderr.on('data', (data) => {
